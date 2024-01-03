@@ -1,8 +1,9 @@
+
+<img src="python.png" width="70px" style="margin: 30px auto 0px auto; display: block;">
+
 # Python Basics Learning Repository
 
 This repository contains Python basics lessons and exercises that I've worked on during my learning journey. Each topic comes with tasks to reinforce the concepts learned.
-
-<img src="https://giphy.com/stickers/devrock-python-django-edr-LMt9638dO8dftAjtco" width="30px">
 
 
 ## Table of Contents
