@@ -268,7 +268,12 @@ while True:
 # Ask the user to enter a number and calculate its factorial using a for loop.
 # The factorial of a number n is the product of all positive integers up to n.
 #**************************************************************************************
+user_num = int(input('Enter a number: '))
+factorial = 1
 
+for i in range(1, user_num + 1):
+    factorial *= i
+print(factorial)
 
 #**************************************************************************************
 # EXERCISE 15
@@ -281,3 +286,9 @@ while True:
 # ****
 # *****
 #**************************************************************************************
+for i in range(1, 6):
+    for j in range(1, 6):
+        if j - i > 0:
+            break
+        print("*", end=" ")
+    print()
