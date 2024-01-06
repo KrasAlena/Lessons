@@ -206,3 +206,78 @@ while True:
 for n in range(1, 11):
     if n % 2 == 0:
         print(n)
+
+#**************************************************************************************
+# EXERCISE 10
+# Multiplication Table:
+# Ask the user to enter a number and print its multiplication table (up to 10)
+# using a for loop.
+#**************************************************************************************
+user_num = int(input('Enter a number: '))
+
+for i in range(1, 11):
+    print(f'{user_num} * {i} = {user_num * i}')
+    i += 1
+
+#**************************************************************************************
+# EXERCISE 11
+# Sum of Numbers:
+# Write a program to calculate and print the sum of all numbers from 1 to 10
+# using a for loop.
+#**************************************************************************************
+user_sum = 0
+
+for i in range(1, 11):
+    user_sum += i
+print(user_sum)
+
+#**************************************************************************************
+# EXERCISE 12
+# Nested Loop - Multiplication Table:
+# Use a nested loop (combination of while and for) to print the multiplication table
+# from 1 to 5.
+#**************************************************************************************
+for i in range(1, 6):
+    for j in range(1, 11):
+        print(f'{i} * {j} = {i * j}', end=" | ")
+        j += 1
+    print()
+
+#**************************************************************************************
+# EXERCISE 13
+# Guess the Number:
+# Generate a random number between 1 and 10. Ask the user to guess the number
+# using a while loop. Provide feedback if the guessed number is too high or too low.
+# Continue the loop until the user guesses correctly.
+#**************************************************************************************
+import random
+secret_num = random.randint(1, 10)
+
+while True:
+    user_num = int(input('Guess the number: '))
+    if user_num == secret_num:
+        print('You rock!')
+    else:
+        print('Try again...')
+
+
+
+#**************************************************************************************
+# EXERCISE 14
+# Factorial Calculation:
+# Ask the user to enter a number and calculate its factorial using a for loop.
+# The factorial of a number n is the product of all positive integers up to n.
+#**************************************************************************************
+
+
+#**************************************************************************************
+# EXERCISE 15
+# Pattern Printing:
+# Use nested loops to print the following pattern:
+#
+# *
+# **
+# ***
+# ****
+# *****
+#**************************************************************************************
