@@ -44,10 +44,64 @@ print(math_operations())
 # Create a function that returns only strings with unique characters.
 #**************************************************************************************
 def unique_char(text):
-    return ''.join(set(text))
+    return [word for word in text.split() if len(word) == len(set(word))]
 
 text = 'Create a function that returns only strings with unique characters.'
 print(unique_char(text))
+
+
+def unique_char(text):
+    new_list = []
+    for word in text.split():
+        unique = True
+        for letter in word:
+            if word.count(letter) > 1:
+                unique = False
+                break
+        if unique:
+            new_list.append(word)
+    return new_list
+
+text = 'Create a function that returns only strings with with unique characters.'
+print(unique_char(text))
+
+#--------------------------------------------------------------
+def unique_char(text):
+    seen_words = set()
+    result = []
+
+    for word in text.split():
+        if word not in seen_words and len(set(word)) == len(word):
+            seen_words.add(word)
+            result.append(word)
+
+    return result
+
+
+text = 'Create a function that returns only strings with with unique characters.'
+print(unique_char(text))
+#---------------------------------------------------------------
+
+def unique_char(text):
+    words = text.split()
+    result = []
+
+    for i in range(len(words)):
+        unique = True
+        for j in range(len(words[i])):
+            if words[i].count(words[i][j]) > 1:
+                unique = False
+                break
+
+        if unique and words[i] not in words[:i] + words[i + 1:]:
+            result.append(words[i])
+
+    return result
+
+
+text = 'Create a function that returns only strings with unique characters.'
+print(unique_char(text))
+
 
 #**************************************************************************************
 # EXERCISE 5
