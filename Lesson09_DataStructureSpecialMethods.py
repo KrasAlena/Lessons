@@ -18,6 +18,7 @@ print(squares)
 names = ['John', 'Mary', 'Lina', 'Mark', 'Steve', 'Lin', 'Max']
 
 even_names = [name for idx, name in enumerate(names) if idx % 2 == 0]
+
 print(even_names)
 #-------------------------------------------
 
