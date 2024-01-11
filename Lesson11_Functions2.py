@@ -116,9 +116,9 @@ print(if_bigrams_in_list(bigrams, lst))
 #**************************************************************************************
 def starts_with_vowel(lst):
     vowels = 'aeiou'
-    return list(filter(lambda x: x[0] in vowels, lst))
+    return list(filter(lambda x: x[0].lower() in vowels, lst))
 
-lst = ["oo", "mi", "ki", "la"]
+lst = ["Oo", "mi", "ki", "la"]
 print(starts_with_vowel(lst))
 
 #**************************************************************************************
