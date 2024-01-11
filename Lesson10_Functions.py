@@ -109,7 +109,7 @@ print(unique_char(text))
 # that takes a text as input and extracts all email addresses from the text.
 #**************************************************************************************
 def cut_emails(text):
-    words_list = [word for word in text.split() if '@' not in word]
+    words_list = [word.strip('.,') for word in text.split() if '@' in word]
     return ' '.join(words_list)
 
 text = 'We have the list of company\'s emails: example@gmail.com, support@example.com. But these emails are only for internal use.'
