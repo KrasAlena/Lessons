@@ -139,10 +139,13 @@ def math_operations(*args):
         num_substraction = num1 - num2
         num_division = num1 / num2
         num_mult = num1 * num2
-        return num_sum, num_substraction, num_division, num_mult
-    except (ZeroDivisionError, TypeError) as err:
+        if num2 > 100:
+            raise ValueError('The second argument is too big!')
+        else:
+            return num_sum, num_substraction, num_division, num_mult
+    except (ZeroDivisionError, TypeError, ValueError) as err:
         return err.args
     except SomeError as e:
         return str(e)
 
-print(math_operations(5, 0, 3))
+print(math_operations(5, 101))
