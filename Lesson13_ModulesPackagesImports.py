@@ -50,3 +50,48 @@ print(result)
 # Create a function that moves a file from one directory to another.
 # Create a function that deletes a file.
 #**************************************************************************************
+import os
+'''A function that lists all files in the current directory'''
+def list_all_files_in_dir():
+    cur_dir = os.getcwd()
+    files_in_dir = os.listdir(cur_dir)
+    return files_in_dir
+
+print(list_all_files_in_dir())
+
+'''A function that creates a new directory'''
+def create_dir(path):
+    return os.mkdir(path)
+
+path = '/Users/alena.krasinskiene/Desktop/Python_course/Lessons/L13Ex4'
+print(create_dir(path))
+
+'''A function that renames a file'''
+def rename_file(cur_name, new_name):
+    return os.rename(cur_name, new_name)
+
+cur_name = 'Lesson3_task1.py'
+new_name = 'Lesson03_task1.py'
+rename_file(cur_name, new_name)
+
+'''A function that moves a file from one directory to another'''
+import shutil
+def move_file(cur_path, new_path):
+    return shutil.move(cur_path, new_path)
+
+cur_path = '/Users/alena.krasinskiene/Desktop/Python_course/Lessons/task.py'
+new_path = '/Users/alena.krasinskiene/Desktop/Python_course/Lessons/L13Ex4/task.py'
+
+move_file(cur_path, new_path)
+
+'''A function that lists all files in the current directory'''
+def delete_file():
+    # Specify the path of the new file to be created
+    new_file_path = '/Users/alena.krasinskiene/Desktop/Python_course/Lessons/L13Ex4/test.txt'
+
+    # Open the file in write mode to create it
+    with open(new_file_path, 'w') as new_file:
+        new_file.write("This is a new file.")
+    return os.remove(new_file_path)
+
+delete_file()
