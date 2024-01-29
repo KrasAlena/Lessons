@@ -225,3 +225,82 @@ print(cafe.drinks_only())
 print(cafe.cheapest_item())
 print(cafe.fulfill_order())
 print(cafe.due_amount())
+
+#**************************************************************************************
+# EXERCISE 4
+# Create a Python program that simulates an electronics store.
+# The store sells different types of electronic devices like laptops, smartphones,
+# and televisions.
+#
+# Create a base class ElectronicDevice with attributes like brand, price,
+# and warranty_period. It should have methods to get_details() and purchase().
+# The purchase() method should reduce the stock of the device by 1.
+#
+# Create child classes Laptop, Smartphone, and Television that inherit from the ElectronicDevice class.
+# Each of these classes should have  additional attributes specific to them.
+# For example,Laptop can have ram and storage, Smartphone can have screen_size and battery_capacity,
+# and Television can have screen_size and resolution`.
+#
+# Use access modifiers to ensure that the price and stock attributes cannot be directly
+# accessed or modified outside the class.
+#
+# Create an instance of each device and call their methods to test the functionality.
+#
+# Implement a Discount class that can be applied to the electronic devices to reduce
+# their price. This class should have a method apply_discount() that takes
+# an ElectronicDevice object and a discount percentage, and returns the price after discount.
+#**************************************************************************************
+class ElectronicDevice:
+    def __init__(self, brand: str, price: float, warranty_period: int, stock: int=0):
+        self.brand = brand
+        self._price = price # Protected attribute
+        self.warranty_period = warranty_period
+        self._stock = stock # Protected attribute
+
+    def get_details(self):
+        print(f'Brand: {self.brand}')
+        print(f'Price: {self._price}')
+        print(f'Warranty period (months): {self.warranty_period}')
+        print(f'Devices in stock: {self._stock}')
+
+    def purchase(self):
+        self._stock = self._stock - 1
+        return self._stock
+
+    def get_price(self):
+        return self._price
+
+# phone = ElectronicDevice('iPhone', 999.99, 36, 1050)
+# phone.get_details()
+# print(phone.purchase())
+# print(phone.purchase())
+# print(phone.purchase())
+
+class Laptop(ElectronicDevice):
+    def __init__(self, brand, price, warranty_period, stock, ram, storage):
+        super().__init__(brand, price, warranty_period, stock)
+        self.ram = ram
+        self.storage = storage
+
+class Smartphone(ElectronicDevice):
+    def __init__(self, brand, price, warranty_period, stock, screen_size, battery_capacity):
+        super().__init__(brand, price, warranty_period, stock)
+        self.screen_size = screen_size
+        self.battery_capacity = battery_capacity
+
+class Television(ElectronicDevice):
+    def __init__(self, brand, price, warranty_period, stock, screen_size, resolution):
+        super().__init__(brand, price, warranty_period, stock)
+        self.screen_size = screen_size
+        self.resolution = resolution
+
+class Discount():
+    def apply_discount(device, discount):
+        return round((device.get_price() - (device.get_price() / 100 * discount)), 2)
+
+phone = Smartphone('iPhone', 999.99, 36, 1050, '414×896', 4000)
+print(phone.get_details())
+print(phone.get_price())
+
+discounted_price = Discount.apply_discount(phone, 30)
+print(f'Discounted price: {discounted_price}')
