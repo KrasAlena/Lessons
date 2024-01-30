@@ -241,12 +241,11 @@ class Primate(Mammal):
 
 chimp = Primate('Nancy', True, True)
 # 🐒
-# Access attributes
+
 print(f'Chimpanzee name: {chimp.name}')
 print(f'Warm-blooded: {chimp.warm_blooded}')
 print(f'Opposable thumbs: {chimp.opposable_thumbs}')
 
-# Call methods
 chimp.make_noise()
 print(chimp.give_birth('🐒'))
 chimp.swing()
