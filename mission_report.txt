@@ -1,0 +1,8 @@
+Organization: NASA
+Year Built: 2015
+Age: 9 years
+Weight: 50000 kg
+Orbit Height: 300 miles
+Personnel Count: 10
+Burn Rate: 166.67 kg/mile
+Mission Cost: $1,000,070,144.44

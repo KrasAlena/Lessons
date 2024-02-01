@@ -154,3 +154,20 @@ class Arithmetic(Calc):
 
     def get_result(self):
         pass
+
+    print("Choose a calculator:")
+    print("1. Arithmetic Calculator")
+    print("2. Geometry Calculator")
+
+    choice = input("Enter your choice (1 or 2): ")
+
+    if choice == '1':
+        calculator = Arithmetic()
+    elif choice == '2':
+        calculator = Geometry()
+    else:
+        print("Invalid choice. Please choose 1 or 2.")
+        exit()
+
+    result = calculator.get_result()
+    print("Result:", result)
