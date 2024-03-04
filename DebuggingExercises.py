@@ -223,3 +223,35 @@ numbers = [1, 2, 3, 4]
 result = square_elements(numbers)
 print(numbers)
 print(result)
+
+# **************************************************************************************
+# EXERCISE 8
+# The parameter `weekday` is `True` if it is a weekday, and the parameter `vacation` is
+# `True` if we are on vacation. We sleep in if it is not a weekday or we're on vacation.
+# Return `True` if we sleep in. Exercise from [here](https://codingbat.com/prob/p173401).
+# ```
+# sleep_in(False, False) → True
+# sleep_in(True, False) → False
+# sleep_in(False, True) → True
+# ```
+# def sleep_in(weekday, vacation):
+#     if vacation is True:
+#         return True
+#     elif weekday != True or vacation != True:
+#         return True
+#     else
+#         return False
+#
+# result = sleep_in(False, False)
+# print(result)
+# **************************************************************************************
+def sleep_in(weekday, vacation):
+    if vacation is True:
+        return True
+    elif weekday != True:
+        return True
+    else:
+        return False
+
+result = sleep_in(True, False)
+print(result)
