@@ -1,5 +1,6 @@
+import uuid
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from bank_sql_1 import Bank, Person, Account
 from sqlalchemy.orm import relationship, sessionmaker
 
@@ -8,20 +9,9 @@ Session = sessionmaker(bind=engine)
 session = Session()
 """:type: sqlalchemy.orm.Session"""
 
-# person1 = Person('John', 'Doe', '+3706123456')
-# person2 = Person('Mary', 'Poppins', '+3706123457')
-# person3 = Person('Ann', 'White', '+3706765456')
-# person4 = Person('Steve', 'Black', '+3706112156')
-#
-#
-#
-# session.add(person1)
-# session.add(person2)
-# session.add(person3)
-# session.add(person4)
-
-
 session.commit()
+
+
 def main():
     def main_menu():
         print('Welcome to the Bank System Console App')
@@ -29,7 +19,9 @@ def main():
         print('2. Add Bank')
         print('3. Add Account')
         print('4. View Account Information')
-        print('5. Exit')
+        print('5. Transfer')
+        print('6. Delete account')
+        print('0. Exit')
 
         user_choice = input('Enter your choice: ')
 
@@ -57,7 +49,6 @@ def main():
         session.add(new_bank)
         session.commit()
 
-
     def add_account():
         print('Adding a new account')
         person_surname = input('Enter your surname: ')
@@ -81,7 +72,8 @@ def main():
 
                 session.add(new_account)
                 session.commit()
-
+        else:
+            print(f'Sorry, we don\'t have any {person.name} {person.surname} in our client list')
 
     def view_account_info():
         user_surname = input('Enter your surname: ')
@@ -96,6 +88,50 @@ def main():
         else:
             print(f'No accounts found for {user_surname}')
 
+    def transfer():
+        user_surname = input('Enter your surname: ')
+        person = session.query(Person).filter_by(surname=user_surname).first()
+        if person:
+            accounts = session.query(Account).filter_by(acc_holder=person.id).all()
+            if accounts:
+                print('Your accounts:')
+                for account in accounts:
+                    print(f'Account number: {account.acc_number}. Balance: {account.balance}')
+                from_acc = uuid.UUID(input('Enter your account to transfer from: '))
+                to_acc = uuid.UUID(input('Enter your account to transfer to: '))
+                # raise an error
+                amount = float(input('Enter the amount to transfer: '))
+
+                transfer_from = session.query(Account).filter_by(acc_number=from_acc).first()
+                transfer_to = session.query(Account).filter_by(acc_number=to_acc).first()
+
+                if transfer_from and transfer_to:
+                    if transfer_from.balance >= amount:
+                        transfer_from.balance -= amount
+                        transfer_to.balance += amount
+
+                        session.commit()
+
+    def delete_account():
+        user_surname = input('Enter your surname: ')
+        person = session.query(Person).filter_by(surname=user_surname).first()
+        if person:
+            accounts = session.query(Account).filter_by(acc_holder=person.id).all()
+            if accounts:
+                print('Your accounts:')
+                for account in accounts:
+                    print(f'Account number: {account.acc_number}. '
+                          f'Balance: {account.balance}')
+                acc_to_delete = uuid.UUID(input('Enter what account you want to delete: '))
+                for account in accounts:
+                    if account.acc_number == acc_to_delete:
+                        session.query(Account).filter_by(acc_number=acc_to_delete).delete()
+                        print(f'Your account {account.acc_number} was deleted successfully!')
+                        session.commit()
+                    else:
+                        print('Account not found')
+
+
     while True:
         choice = main_menu()
 
@@ -108,6 +144,10 @@ def main():
         elif choice == '4':
             view_account_info()
         elif choice == '5':
+            transfer()
+        elif choice == '6':
+            delete_account()
+        elif choice == '0':
             print('Exiting...')
             break
         else:
