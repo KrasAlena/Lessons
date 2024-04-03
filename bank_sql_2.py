@@ -75,8 +75,16 @@ def main():
         else:
             print(f'Sorry, we don\'t have any {person.name} {person.surname} in our client list')
 
-    def view_account_info():
-        user_surname = input('Enter your surname: ')
+    def first_letter_cap(func):
+        def wrapper():
+            find_surname = input("Enter your name: ")
+            cap_surname = find_surname.capitalize()
+            return func(cap_surname)
+
+        return wrapper
+    @first_letter_cap
+    def view_account_info(user_surname):
+        # user_surname = input('Enter your surname: ')
         accounts_info = (session.query(Account, Person, Bank).join(Person)
                          .join(Bank).filter(Person.surname == user_surname).all())
         if accounts_info:
@@ -130,7 +138,8 @@ def main():
                         session.commit()
                     else:
                         print('Account not found')
-
+        else:
+            print('There is no such person')
 
     while True:
         choice = main_menu()
@@ -156,3 +165,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
