@@ -10,6 +10,7 @@ Get all items which names starts with letter a, and cost is between 10 and 100.
 Find all item names (only) for prices > 50 and quantity < 10.
 '''
 from pymongo import MongoClient
+from pymongo.errors import OperationFailure, WriteError
 from faker import Faker
 import random
 from datetime import datetime, timedelta
@@ -22,6 +23,22 @@ class StoreManager:
         self.client = client = MongoClient(host, port)
         self.db = client[db_name]
         self.collection = self.db[db_collection]
+        self.create_validation()
+
+    def create_validation(self):
+        validator = {
+            '$jsonSchema': {
+                'bsonType': 'object',
+                'required': ['name', 'price', "quantity", 'date'],
+                'properties': {
+                    'name': {'bsonType': 'string'},
+                    'price': {'bsonType': 'double', 'minimum': 0.5, 'maximum': 100},
+                    'quantity': {'bsonType': 'int', 'minimum': 101, 'maximum': 1000},
+                    'date': {'bsonType': 'date'}
+                }
+            }
+        }
+        self.db.create_collection(self.collection.name, validator=validator)
 
     def generate_data(self, category, names):
         fake = Faker()
@@ -71,8 +88,8 @@ def main():
 
     categories = [(electronics, electronics_names), (fruits, fruits_names), (food, food_names)]
 
-    # for category, names in categories:
-    #     category.generate_data(category, names)
+    for category, names in categories:
+        category.generate_data(category, names)
 
     food_items = electronics.get_items_by_date('food')
     for item in food_items:

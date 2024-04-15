@@ -1,11 +1,13 @@
 '''
 Connect to a MongoDB server running on localhost.
-Create a new database named 'exercise_db' and a collection named 'exercise_collection'.
+Create a new database named 'shopping_db' and a collection named 'shopping_collection'.
 Define the following JSON schema validation rules for the collection:
 The document must be an object.
 The 'name' field is required and must be a string.
 The 'age' field is required and must be an integer between 18 and 99.
 The 'email' field is required and must be a string containing a valid email address.
+The 'address' field is required and must be an object.
+The 'address' object must have the 'street', 'city', and 'postal_code' fields, each being a required string.
 Insert three documents into the collection, one that satisfies the validation rules and two that violate the validation rules.
 Print all the documents in the collection.
 Clean up by dropping the collection and closing the MongoDB connection.
@@ -15,8 +17,8 @@ from pymongo.errors import OperationFailure, WriteError
 from pprint import pprint
 
 client = MongoClient('localhost', 27017)
-db = client['exercise_db']
-collection = db['exercise_collection']
+db = client['shopping_db']
+collection = db['shopping_collection']
 
 validation_rules = {
     'validator': {
@@ -35,6 +37,21 @@ validation_rules = {
                 'email': {
                     'bsonType': 'string',
                     'pattern': '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+                },
+                'address': {
+                    'bsonType': 'object',
+                    'required': ['street', 'city', 'postal_code'],
+                    'properties': {
+                        'street': {
+                            'bsonType': 'string'
+                        },
+                        'city': {
+                            'bsonType': 'string'
+                        },
+                        'postal_code': {
+                            'bsonType': 'string'
+                        }
+                    }
                 }
             }
         }
@@ -42,7 +59,7 @@ validation_rules = {
 }
 
 try:
-    db.command('collMod', collection.name, **validation_rules)
+    db.create_collection(collection.name, validator=validation_rules['validator'])
 except OperationFailure as e:
     print(e.details['errmsg'])
 
@@ -56,18 +73,33 @@ def insert_doc(document):
 
 
 document1 = {
-    'name': 'Mike', 'age': 35, 'email': 'test@gmail.com'
+    'name': 'John Doe',
+    'age': 25,
+    'email': 'john@example.com',
+    'address': {'street': '123 Main St', 'city': 'Vilnius', 'postal_code': '12345'}
 }
 
 document2 = {
-    'name': 'Don', 'age': 31, 'email': '123@mail.com'
+    'name': 'Jane Smith',
+    'age': 17,  # Invalid age
+    'email': 'jane.example.com',  # Invalid email
+    'address': {'street': '456 Elm St', 'city': 'Milan', 'postal_code': '67890'}
 }
 
 document3 = {
-    'name': 'Alice', 'age': 17, 'email': 'smth@mail.com'
+    'name': 'Alice Johnson',
+    'age': 30,
+    'email': 'alice@example.com',
+    'address': {'street': 789, 'city': 'Paris', 'postal_code': '45678'} # Invalid street
 }
 
-# insert_doc(document1)
-# insert_doc(document2)
-# insert_doc(document3)
+insert_doc(document1)
+insert_doc(document2)
 insert_doc(document3)
+
+print('All documents in the collection:')
+for doc in collection.find():
+    pprint(doc)
+
+collection.drop()
+client.close()
