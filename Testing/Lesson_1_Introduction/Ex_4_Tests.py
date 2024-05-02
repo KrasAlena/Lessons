@@ -25,7 +25,7 @@ def test_calculate_numbers_division():
     assert calculate(4.0, 2.0, '/') == 2.0
 
 
-def test_calculate_division_by_zer0():
+def test_calculate_division_by_zero():
     try:
         calculate(4, 0, '/')
         assert False, 'Should raise ZeroDivisionError'
