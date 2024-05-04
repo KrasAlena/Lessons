@@ -61,5 +61,5 @@ def test_calculate_string_number_multiply():
     try:
         calculate('a', 3, '*')
         assert False, 'Should raise TypeError'
-    except TypeError:
+    except ValueError:
         pass
