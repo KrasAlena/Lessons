@@ -33,5 +33,5 @@ def test_first_last6_not_last_not_first_6element():
     assert first_last6([1, 6, 3]) == False
 
 
-def test_first_last6_not_last_no_6element():
+def test_first_last6_no_6element():
     assert first_last6([1, 5, 3]) == False
