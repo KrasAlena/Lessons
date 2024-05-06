@@ -25,3 +25,5 @@ __pycache__/
 
 # Ignore environment configuration files with sensitive information
 .env
+
+.DS_Store
